@@ -6,12 +6,12 @@ services:
     container_name: pharma-ai-monitor
     ports:
       - "5000:5000"
-    environment:
-      - FLASK_ENV=production
-      - PYTHONPATH=/app
     volumes:
       - ./database:/app/database
       - ./logs:/app/logs
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_PATH=/app/database/pharma_ai.db
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/test"]
@@ -20,6 +20,15 @@ services:
       retries: 3
       start_period: 40s
 
-networks:
-  default:
-    name: pharma-ai-network
+  # 可选: 添加Ollama服务 (如果需要本地AI模型)
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: ollama
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   restart: unless-stopped
+
+# volumes:
+#   ollama_data:
