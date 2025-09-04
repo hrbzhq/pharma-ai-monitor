@@ -21,7 +21,7 @@ COPY . .
 RUN mkdir -p database logs static templates
 
 # 设置环境变量
-ENV FLASK_APP=app.py
+ENV FLASK_APP=standalone_server.py
 ENV FLASK_ENV=production
 ENV PYTHONPATH=/app
 
@@ -33,4 +33,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:5000/test || exit 1
 
 # 启动命令
-CMD ["python", "app.py"]
+CMD ["python", "standalone_server.py"]
